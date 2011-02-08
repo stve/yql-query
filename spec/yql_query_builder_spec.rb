@@ -148,6 +148,15 @@ describe YqlQuery::Builder do
       @builder.sanitize("Rating.Description").should be_kind_of(YqlQuery::Builder)
     end
   end
-  # @sanitize                   = args[:sanitize]
+
+  context "chaining" do
+    it "should combine query options" do
+      @builder.table('music.artists').limit(5).conditions("name = 'Jose James'")
+      @builder.query.limit.should == 5
+      @builder.query.table.should == 'music.artists'
+      @builder.query.conditions.include?("name = 'Jose James'").should be_true
+    end
+
+  end
 
 end

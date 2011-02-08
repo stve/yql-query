@@ -89,8 +89,6 @@ module YqlQuery
       self.query.sanitize = sanitize
       self
     end
-    # @per_page                   = args[:per_page]
-
 
   end
 end
