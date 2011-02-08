@@ -6,9 +6,9 @@ Gem::Specification.new do |s|
   s.name        = "yql-query"
   s.version     = YqlQuery::VERSION
   s.platform    = Gem::Platform::RUBY
-  s.authors     = ["TODO: Write your name"]
-  s.email       = ["TODO: Write your email address"]
-  s.homepage    = ""
+  s.authors     = ["Steve Agalloco"]
+  s.email       = ["steve.agalloco@gmail.com"]
+  s.homepage    = "https://github.com/spagalloco/yql-query"
   s.summary     = %q{TODO: Write a gem summary}
   s.description = %q{TODO: Write a gem description}
 
