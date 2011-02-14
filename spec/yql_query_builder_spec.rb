@@ -1,7 +1,7 @@
 require File.expand_path('../spec_helper', __FILE__)
 
 describe YqlQuery::Builder do
-  before(:all) do
+  before(:each) do
     @builder = YqlQuery::Builder.new
   end
 
@@ -157,6 +157,19 @@ describe YqlQuery::Builder do
       @builder.query.conditions.include?("name = 'Jose James'").should be_true
     end
 
+  end
+
+  describe "#to_s" do
+
+    it "should return the generated query" do
+      @builder.table('music.artists').limit(5).conditions("name = 'Jose James'")
+      @builder.to_s.should == "select * from music.artists where name = 'Jose James' limit 5"
+    end
+
+    it "should be aliased as to_query" do
+      @builder.table('music.artists').limit(5).conditions("name = 'Jose James'")
+      @builder.to_s.should == @builder.to_query
+    end
   end
 
 end

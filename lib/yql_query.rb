@@ -9,6 +9,39 @@ module YqlQuery
     def initialize
       self.conditions = []
     end
+
+    def to_s
+      [select_statement, conditions_statement, limit_offset_statement, filter_statement].join(' ').chomp(' ')
+    end
+
+    private
+      def select_statement
+        stmt = "select #{@select || '*'}"
+        stmt << " from "
+        stmt << @table if @table
+        stmt
+      end
+
+      def conditions_statement
+        @conditions.uniq.any? ? "where #{@conditions.uniq.join(' and ')}" : ""
+      end
+
+      def limit_offset_statement
+        stmt = ''
+        stmt << "limit #{@limit}" if @limit
+        stmt << "offset #{@offset}" if @offset
+        stmt
+      end
+
+      def filter_statement
+        statements = []
+        statements << "sort(field='#{@sort}')" if @sort
+        statements << "tail(count=#{@tail})" if @tail
+        statements << "truncate(count=#{@truncate})" if @truncate
+        statements << "reverse()" if @reverse
+        statements << "sanitize(field='#{@sanitize}')" if @sanitize
+        statements.any? ? "| #{statements.join(' | ')}" : ''
+      end
   end
 
   class Builder
@@ -89,6 +122,11 @@ module YqlQuery
       self.query.sanitize = sanitize
       self
     end
+
+    def to_s
+      self.query.to_s
+    end
+    alias :to_query :to_s
 
   end
 end
