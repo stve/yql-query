@@ -224,6 +224,11 @@ describe YqlQuery::Builder do
       @builder.to_s.should == "select Title, First Name, Email from music.artists where name = 'John'"
     end
 
+    it "should generate the right query when given a select as an array" do
+      @builder.conditions("name = 'John'").select(['age', 'sex', 'language', 'other'])
+      @builder.to_s.should == "select age, sex, language, other from music.artists where name = 'John'"
+    end
+
   end
 
 end
