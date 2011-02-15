@@ -214,6 +214,11 @@ describe YqlQuery::Builder do
       @builder.to_s.should == "select * from music.artists where name = 'John' offset 15"
     end
 
+    it "should generate the right query when given a select" do
+      @builder.conditions("name = 'John'").select('Title, First Name, Email')
+      @builder.to_s.should == "select Title, First Name, Email from music.artists where name = 'John'"
+    end
+
   end
 
 end
