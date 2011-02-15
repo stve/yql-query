@@ -57,7 +57,7 @@ describe YqlQuery::Builder do
   describe "#use()" do
     it "should set the use" do
       @builder.use('http://namedata.com', 'names')
-      @builder.query.use.should include?(Use.new('http://namedata.com', 'names'))
+      @builder.query.uses.include?(YqlQuery::Use.new('http://namedata.com', 'names')).should be_true
     end
 
     it "should return the builder" do
@@ -197,6 +197,11 @@ describe YqlQuery::Builder do
   context "generating queries" do
     before(:each) do
       @builder.table('music.artists')
+    end
+
+    it "should generate ther ight query when given a different data source to use" do
+      @builder.conditions("name = 'Jose James'").use('http://musicbrainz.org/data.xml', 'musicBrainzArtists').table('musicBrainzArtists')
+      @builder.to_s.should == "use http://musicbrainz.org/data.xml as musicBrainzArtists; select * from musicBrainzArtists where name = 'Jose James'"
     end
 
     it "should generate the right query when given a single condition" do

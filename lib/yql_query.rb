@@ -4,10 +4,19 @@ module YqlQuery
 
   class Use
     attr_accessor :source, :as
+
+    def initialize(source, as)
+      @source = source
+      @as = as
+    end
+
+    def ==(b)
+      self.source == b.source && self.as == b.as
+    end
   end
 
   class Query
-    attr_accessor :table, :limit, :offset, :select, :use, :conditions
+    attr_accessor :table, :limit, :offset, :select, :uses, :conditions
     attr_accessor :sort, :tail, :truncate, :reverse, :unique, :sanitize
     attr_accessor :sort_order
 
@@ -21,15 +30,7 @@ module YqlQuery
 
     private
       def use_statement
-        stmt = ''
-
-        if @uses
-          @uses.each do |use|
-            "use #{use.source} as #{use.as};"
-          end
-        end
-
-        stmt
+        @uses.map { |use| "use #{use.source} as #{use.as};" }.join(' ')
       end
 
       def select_statement
@@ -80,6 +81,7 @@ module YqlQuery
       self.query.offset     = options.delete(:offset)
       self.query.select     = options.delete(:select)
       self.query.conditions = options.delete(:conditions) || []
+      self.query.uses       = options.delete(:uses) || []
       self.query.tail       = options.delete(:tail)
       self.query.truncate   = options.delete(:truncate)
       self.query.reverse    = options.delete(:reverse)
