@@ -17,7 +17,15 @@ module YqlQuery
 
     private
       def select_statement
-        stmt = "select #{@select || '*'}"
+        stmt = 'select '
+        stmt << case @select
+          when String
+            @select
+          when Array
+            @select.join(', ')
+          else
+            '*'
+        end
         stmt << " from "
         stmt << @table if @table
         stmt
