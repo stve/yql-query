@@ -44,6 +44,11 @@ describe YqlQuery::Builder do
       @builder.query.select.should == 'name'
     end
 
+    it "should accept select as an array" do
+      @builder.select(['age', 'sex', 'language', 'other'])
+      @builder.query.select.should == ['age', 'sex', 'language', 'other']
+    end
+
     it "should return the builder" do
       @builder.select('name').should be_kind_of(YqlQuery::Builder)
     end
