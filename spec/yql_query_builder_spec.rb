@@ -199,7 +199,7 @@ describe YqlQuery::Builder do
       @builder.table('music.artists')
     end
 
-    it "should generate ther ight query when given a different data source to use" do
+    it "should generate ther right query when given a different data source to use" do
       @builder.conditions("name = 'Jose James'").use('http://musicbrainz.org/data.xml', 'musicBrainzArtists').table('musicBrainzArtists')
       @builder.to_s.should == "use http://musicbrainz.org/data.xml as musicBrainzArtists; select * from musicBrainzArtists where name = 'Jose James'"
     end
