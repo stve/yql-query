@@ -204,6 +204,11 @@ describe YqlQuery::Builder do
       @builder.to_s.should == "use http://musicbrainz.org/data.xml as musicBrainzArtists; select * from musicBrainzArtists where name = 'Jose James'"
     end
 
+    it "should generate ther right query when given multiple data sources to use" do
+      @builder.conditions("name = 'Jose James'").use('http://musicbrainz.org/data.xml', 'musicBrainzArtists').use('http://musicbrainz.org/albums.xml', 'musicBrainzAlbums').table('musicBrainzArtists')
+      @builder.to_s.should == "use http://musicbrainz.org/data.xml as musicBrainzArtists; use http://musicbrainz.org/albums.xml as musicBrainzAlbums; select * from musicBrainzArtists where name = 'Jose James'"
+    end
+
     it "should generate the right query when given a single condition" do
       @builder.conditions("name = 'Jose James'")
       @builder.to_s.should == "select * from music.artists where name = 'Jose James'"
