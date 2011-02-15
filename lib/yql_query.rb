@@ -2,6 +2,10 @@ require 'hashie/mash'
 
 module YqlQuery
 
+  class Use
+    attr_accessor :source, :as
+  end
+
   class Query
     attr_accessor :table, :limit, :offset, :select, :use, :conditions
     attr_accessor :sort, :tail, :truncate, :reverse, :unique, :sanitize
@@ -12,10 +16,22 @@ module YqlQuery
     end
 
     def to_s
-      [select_statement, conditions_statement, limit_offset_statement, filter_statement].join(' ').chomp(' ').strip
+      [use_statement, select_statement, conditions_statement, limit_offset_statement, filter_statement].join(' ').chomp(' ').strip
     end
 
     private
+      def use_statement
+        stmt = ''
+
+        if @uses
+          @uses.each do |use|
+            "use #{use.source} as #{use.as};"
+          end
+        end
+
+        stmt
+      end
+
       def select_statement
         stmt = 'select '
         stmt << case @select
@@ -91,8 +107,8 @@ module YqlQuery
       self
     end
 
-    def use(use)
-      self.query.use = use
+    def use(use, as)
+      self.query.uses << Use.new(use, as)
       self
     end
 

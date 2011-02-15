@@ -56,12 +56,12 @@ describe YqlQuery::Builder do
 
   describe "#use()" do
     it "should set the use" do
-      @builder.use('name')
-      @builder.query.use.should == 'name'
+      @builder.use('http://namedata.com', 'names')
+      @builder.query.use.should include?(Use.new('http://namedata.com', 'names'))
     end
 
     it "should return the builder" do
-      @builder.use('name').should be_kind_of(YqlQuery::Builder)
+      @builder.use('http://namedata.com', 'names').should be_kind_of(YqlQuery::Builder)
     end
   end
 
