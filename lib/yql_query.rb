@@ -5,13 +5,14 @@ module YqlQuery
   class Query
     attr_accessor :table, :limit, :offset, :select, :use, :conditions
     attr_accessor :sort, :tail, :truncate, :reverse, :unique, :sanitize
+    attr_accessor :sort_order
 
     def initialize
       self.conditions = []
     end
 
     def to_s
-      [select_statement, conditions_statement, limit_offset_statement, filter_statement].join(' ').chomp(' ')
+      [select_statement, conditions_statement, limit_offset_statement, filter_statement].join(' ').chomp(' ').strip
     end
 
     private
@@ -88,13 +89,18 @@ module YqlQuery
     end
 
     def conditions(conditions)
-      self.query.conditions << conditions
+      if conditions.kind_of?(String)
+        self.query.conditions << conditions
+      elsif conditions.kind_of?(Array)
+        self.query.conditions += conditions
+      end
       self
     end
     alias :where :conditions
 
-    def sort(sort)
+    def sort(sort, options={:descending => false})
       self.query.sort = sort
+      self.query.sort_order = options
       self
     end
 
