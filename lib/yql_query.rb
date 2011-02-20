@@ -131,6 +131,10 @@ module YqlQuery
         self.query.conditions << conditions
       elsif conditions.kind_of?(Array)
         self.query.conditions += conditions
+      elsif conditions.kind_of?(Hash)
+        conditions.each { |key, value|
+          self.query.conditions << "#{key} = '#{value}'"
+        }
       end
       self
     end

@@ -92,6 +92,12 @@ describe YqlQuery::Builder do
       @builder.query.conditions.include?("name = 'greg'").should be_true
       @builder.query.conditions.include?("age = 34").should be_true
     end
+
+    it "should accept conditions as a hash" do
+      @builder.conditions({ :genre => 'jazz', :type => 'bebop'})
+      @builder.query.conditions.include?("genre = 'jazz'").should be_true
+      @builder.query.conditions.include?("type = 'bebop'").should be_true
+    end
   end
 
   describe "#sort()" do
