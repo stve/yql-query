@@ -2,7 +2,7 @@ require 'hashie/mash'
 
 module YqlQuery
 
-  class Use
+  class Source
     attr_accessor :source, :as
 
     def initialize(source, as)
@@ -25,7 +25,7 @@ module YqlQuery
     end
 
     def to_s
-      [use_statement, select_statement, conditions_statement, limit_offset_statement, filter_statement].join(' ').chomp(' ').strip
+      [use_statement, select_statement, conditions_statement, limit_offset_statement, filter_statement].join(' ').squeeze(' ').strip
     end
 
     private
@@ -61,11 +61,23 @@ module YqlQuery
 
       def filter_statement
         statements = []
-        statements << "sort(field='#{@sort}')" if @sort
+        if @sort
+          if @sort_order && @sort_order[:descending]
+            statements << "sort(field='#{@sort}', descending='true')"
+          else
+            statements << "sort(field='#{@sort}')"
+          end
+        end
+
         statements << "tail(count=#{@tail})" if @tail
         statements << "truncate(count=#{@truncate})" if @truncate
         statements << "reverse()" if @reverse
-        statements << "sanitize(field='#{@sanitize}')" if @sanitize
+        statements << "unique(field='#{@unique}')" if @unique
+        if @sanitize && @sanitize == true
+          statements << "sanitize()"
+        elsif @sanitize
+          statements << "sanitize(field='#{@sanitize}')"
+        end
         statements.any? ? "| #{statements.join(' | ')}" : ''
       end
   end
@@ -110,7 +122,7 @@ module YqlQuery
     end
 
     def use(use, as)
-      self.query.uses << Use.new(use, as)
+      self.query.uses << Source.new(use, as)
       self
     end
 
@@ -150,7 +162,7 @@ module YqlQuery
       self
     end
 
-    def sanitize(sanitize)
+    def sanitize(sanitize=true)
       self.query.sanitize = sanitize
       self
     end

@@ -57,7 +57,7 @@ describe YqlQuery::Builder do
   describe "#use()" do
     it "should set the use" do
       @builder.use('http://namedata.com', 'names')
-      @builder.query.uses.include?(YqlQuery::Use.new('http://namedata.com', 'names')).should be_true
+      @builder.query.uses.include?(YqlQuery::Source.new('http://namedata.com', 'names')).should be_true
     end
 
     it "should return the builder" do
@@ -165,6 +165,11 @@ describe YqlQuery::Builder do
       @builder.query.sanitize.should == "Rating.Description"
     end
 
+    it "should default sanitize to true" do
+      @builder.sanitize
+      @builder.query.sanitize.should be_true
+    end
+
     it "should return the builder" do
       @builder.sanitize("Rating.Description").should be_kind_of(YqlQuery::Builder)
     end
@@ -239,6 +244,45 @@ describe YqlQuery::Builder do
       @builder.to_s.should == "select age, sex, language, other from music.artists where name = 'John'"
     end
 
+    it "should generate the right query when given a sort" do
+      @builder.sort('popularity')
+      @builder.to_s.should == "select * from music.artists | sort(field='popularity')"
+    end
+
+    it "should generate the right query when given a sort descending" do
+      @builder.sort('popularity', :descending => true)
+      @builder.to_s.should == "select * from music.artists | sort(field='popularity', descending='true')"
+    end
+
+    it "should generate the right query when given a tail" do
+      @builder.tail(5)
+      @builder.to_s.should == "select * from music.artists | tail(count=5)"
+    end
+
+    it "should generate the right query when given a truncate" do
+      @builder.truncate(5)
+      @builder.to_s.should == "select * from music.artists | truncate(count=5)"
+    end
+
+    it "should generate the right query when given a reverse" do
+      @builder.reverse
+      @builder.to_s.should == "select * from music.artists | reverse()"
+    end
+
+    it "should generate the right query when given a unique" do
+      @builder.unique('art')
+      @builder.to_s.should == "select * from music.artists | unique(field='art')"
+    end
+
+    it "should generate the right query when given a sanitize" do
+      @builder.sanitize('art')
+      @builder.to_s.should == "select * from music.artists | sanitize(field='art')"
+    end
+
+    it "should generate the right query when given a sanitize all fields" do
+      @builder.sanitize
+      @builder.to_s.should == "select * from music.artists | sanitize()"
+    end
   end
 
 end
