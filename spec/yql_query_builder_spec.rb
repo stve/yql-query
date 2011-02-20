@@ -98,6 +98,11 @@ describe YqlQuery::Builder do
       @builder.query.conditions.include?("genre = 'jazz'").should be_true
       @builder.query.conditions.include?("type = 'bebop'").should be_true
     end
+
+    it "should accept conditions as a hash when passed another query" do
+      @builder.conditions({ :artist_id => YqlQuery::Builder.new.table('music.amg.artists').select('artist_id')})
+      @builder.query.conditions.include?("artist_id in (select artist_id from music.amg.artists)").should be_true
+    end
   end
 
   describe "#sort()" do
