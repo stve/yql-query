@@ -1,5 +1,6 @@
 module YqlQuery
 
+  # The object underlying {Builder} which stores and generates the query.
   class Query
     attr_accessor :table, :limit, :offset, :select, :uses, :conditions
     attr_accessor :sort, :tail, :truncate, :reverse, :unique, :sanitize
@@ -9,6 +10,7 @@ module YqlQuery
       self.conditions = []
     end
 
+    # generates a query based on it's attributes
     def to_s
       [use_statement, select_statement, conditions_statement, limit_offset_statement, filter_statement].join(' ').squeeze(' ').strip
     end
