@@ -118,13 +118,13 @@ module YqlQuery
       elsif conditions.kind_of?(Array)
         self.query.conditions += conditions
       elsif conditions.kind_of?(Hash)
-        conditions.each { |key, value|
+        conditions.each do |key, value|
           if value.kind_of?(YqlQuery::Builder)
             self.query.conditions << "#{key} in (#{value})"
           else
             self.query.conditions << "#{key} = '#{value}'"
           end
-        }
+        end
       end
       self
     end
