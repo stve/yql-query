@@ -86,6 +86,32 @@ module YqlQuery
       self
     end
 
+    # Assigns additional datatable sources for use with the query being constructed.
+    # Conditions are combined.  Hashes assume equivalency when generating queries, except when passed a
+    # {Builder} instance in which case a sub-select is assumed using an 'in'.
+    #
+    # @param [Objct] conditions The conditions of the query.
+    # @return [YqlQuery::Builder] YqlQuery::Builder instance reflecting the data conditions assigned.
+    #
+    # @example The conditions may be passed as either a string, array or a hash:
+    #   base = Builder.new.conditions("sub_genre = 'bebop'")
+    #   base.to_s
+    #   # => "select * from tablename where sub_genre = 'bebop'"
+    #
+    #   base.conditions("genre = 'jazz'").conditions("sub_genre = 'bebop'")
+    #   base.to_s
+    #   # => "select * from tablename where genre = 'jazz' and sub_genre = 'bebop'"
+    #
+    #   base.conditions(["genre = 'jazz'", "sub_genre = 'bebop'"])
+    #   # => "select * from tablename where genre = 'jazz' and sub_genre = 'bebop'"
+    #
+    #   # conditions are also aliased as 'where'
+    #   base.where("genre = 'jazz'")
+    #
+    #   guid_query = Builder.new.table('users').select('guid').where("role = 'admin'")
+    #   base = Builder.new.table('actions).where(:guid => guid_query)
+    #   base.to_s
+    #   => "select * from actions where guid in (select guid from users where role = 'admin')"
     def conditions(conditions)
       if conditions.kind_of?(String)
         self.query.conditions << conditions
