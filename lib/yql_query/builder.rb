@@ -130,16 +130,29 @@ module YqlQuery
     end
     alias :where :conditions
 
-    # Assigns the sort for the query being constructed
+    # Assigns the field to be sorted for the query being constructed
     #
     # @param [Object] sort The column to sort for the query.
     # @return [YqlQuery::Builder] YqlQuery::Builder instance reflecting the sort assigned.
     #
     # @example
     #   base = Builder.new.sort('name)
-    def sort(sort, options={:descending => false})
+    def sort(sort)
       self.query.sort = sort
-      self.query.sort_order = options
+      self.query.sort_descending = false
+      self
+    end
+
+    # Assigns the field to be sorted for the query being constructed
+    #
+    # @param [Object] sort The column to sort descending for the query.
+    # @return [YqlQuery::Builder] YqlQuery::Builder instance reflecting the sort assigned.
+    #
+    # @example
+    #   base = Builder.new.sort('name)
+    def sort_descending(sort)
+      self.query.sort = sort
+      self.query.sort_descending = true
       self
     end
 

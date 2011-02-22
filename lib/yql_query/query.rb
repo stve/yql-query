@@ -4,7 +4,7 @@ module YqlQuery
   class Query
     attr_accessor :table, :limit, :offset, :select, :uses, :conditions
     attr_accessor :sort, :tail, :truncate, :reverse, :unique, :sanitize
-    attr_accessor :sort_order
+    attr_accessor :sort_descending
 
     def initialize
       self.conditions = []
@@ -49,12 +49,10 @@ module YqlQuery
 
       def filter_statement
         statements = []
-        if @sort
-          if @sort_order && @sort_order[:descending]
-            statements << "sort(field='#{@sort}', descending='true')"
-          else
-            statements << "sort(field='#{@sort}')"
-          end
+        if @sort && @sort_descending
+          statements << "sort(field='#{@sort}', descending='true')"
+        elsif @sort
+          statements << "sort(field='#{@sort}')"
         end
 
         statements << "tail(count=#{@tail})" if @tail

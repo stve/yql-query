@@ -111,14 +111,15 @@ describe YqlQuery::Builder do
       @builder.query.sort.should == 'nickname'
     end
 
-    it "should accept an optional hash to set the sort order" do
-      @builder.sort('nickname', :descending => true)
-      @builder.query.sort_order.should == { :descending => true }
+    it "should return the builder" do
+      @builder.sort('nickname').should be_kind_of(YqlQuery::Builder)
     end
+  end
 
-    it "should default the sort order to descending=false" do
-      @builder.sort('nickname')
-      @builder.query.sort_order.should == { :descending => false }
+  describe "#sort_descending()" do
+    it "should set the sort" do
+      @builder.sort_descending('nickname')
+      @builder.query.sort.should == 'nickname'
     end
 
     it "should return the builder" do
@@ -291,7 +292,7 @@ describe YqlQuery::Builder do
     end
 
     it "should generate the right query when given a sort descending" do
-      @builder.sort('popularity', :descending => true)
+      @builder.sort_descending('popularity')
       @builder.to_s.should == "select * from music.artists | sort(field='popularity', descending='true')"
     end
 
