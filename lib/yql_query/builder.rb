@@ -222,5 +222,10 @@ module YqlQuery
     end
     alias :to_query :to_s
 
+    # Resets all arguments to the query
+    def reset
+      self.query = Query.new
+    end
+
   end
 end

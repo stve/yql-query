@@ -193,11 +193,9 @@ describe YqlQuery::Builder do
       @builder.query.table.should == 'music.artists'
       @builder.query.conditions.include?("name = 'Jose James'").should be_true
     end
-
   end
 
   describe "#to_s" do
-
     it "should return the generated query" do
       @builder.table('music.artists').limit(5).conditions("name = 'Jose James'")
       @builder.to_s.should == "select * from music.artists where name = 'Jose James' limit 5"
@@ -207,7 +205,39 @@ describe YqlQuery::Builder do
       @builder.table('music.artists').limit(5).conditions("name = 'Jose James'")
       @builder.to_s.should == @builder.to_query
     end
+  end
 
+  describe "#reset" do
+    it "should reset all query conditions" do
+      @builder.table('Rating')
+      @builder.limit(5)
+      @builder.offset(5)
+      @builder.select('Rating.Description, Rating.SomethingElse')
+      @builder.use('http://namedata.com', 'names')
+      @builder.conditions("name = 'fred'")
+      @builder.sort('nickname')
+      @builder.tail(5)
+      @builder.truncate(3)
+      @builder.reverse
+      @builder.unique("Rating.AverageRating")
+      @builder.sanitize("Rating.Description")
+
+      @builder.reset
+
+      @builder.query.table.should be_nil
+      @builder.query.limit.should be_nil
+      @builder.query.offset.should be_nil
+      @builder.query.select.should be_nil
+      @builder.query.limit.should be_nil
+      @builder.query.uses.should be_empty
+      @builder.query.conditions.should be_empty
+      @builder.query.sort.should be_nil
+      @builder.query.tail.should be_nil
+      @builder.query.truncate.should be_nil
+      @builder.query.reverse.should be_nil
+      @builder.query.unique.should be_nil
+      @builder.query.sanitize.should be_nil
+    end
   end
 
   context "generating queries" do

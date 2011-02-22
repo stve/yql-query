@@ -8,6 +8,7 @@ module YqlQuery
 
     def initialize
       self.conditions = []
+      self.uses = []
     end
 
     # generates a query based on it's attributes
