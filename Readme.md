@@ -47,6 +47,14 @@ to generate the query, just call to_s or to_query:
     builder.to_query
     # => 'select * from tablename...'
 
+passing a hash with a Builder instance to creates sub-select:
+
+    guid_query = Builder.new.table('users').select('guid').where("role = 'admin'")
+
+    builder = Builder.new.table('actions).where(:guid => guid_query)
+    builder.to_s
+    # => "select * from actions where guid in (select guid from users where role = 'admin')"
+
 Note on Patches/Pull Requests
 -----------------------------
 
