@@ -15,6 +15,7 @@ namespace :doc do
       '--protected',
       '--output-dir', 'doc/yard',
       '--markup', 'markdown',
+      '--readme', 'Readme.md'
     ]
   end
 end
