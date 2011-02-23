@@ -8,6 +8,11 @@ Installation
 
     (sudo) gem install yql-query
 
+Documentation
+-------------
+
+[http://rdoc.info/gems/yql-query](http://rdoc.info/gems/yql-query)
+
 Usage
 -----
 
@@ -54,6 +59,23 @@ passing a hash with a Builder instance to creates sub-select:
     builder = Builder.new.table('actions).where(:guid => guid_query)
     builder.to_s
     # => "select * from actions where guid in (select guid from users where role = 'admin')"
+
+The full list of methods available:
+
+    table('music.albums')
+    use('http://somedomain.com/table.xml', 'othersource')
+    select('name')
+    conditions("genre = 'jazz'")
+    sort('albumName')
+    sort_descending('albumName')
+    limit(5)
+    offset(10)
+    tail(5)
+    truncate(10)
+    unique('format')
+    sanitize('description')
+
+Refer to the [documentation](http://rdoc.info/gems/yql-query) for complete usage and more examples.
 
 Note on Patches/Pull Requests
 -----------------------------
