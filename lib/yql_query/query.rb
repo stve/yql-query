@@ -4,7 +4,7 @@ module YqlQuery
   class Query
     attr_accessor :table, :limit, :offset, :select, :uses, :conditions
     attr_accessor :sort, :tail, :truncate, :reverse, :unique, :sanitize
-    attr_accessor :sort_descending
+    attr_accessor :sort_descending, :remote_limit, :remote_offset
 
     def initialize
       self.conditions = []
@@ -33,6 +33,13 @@ module YqlQuery
         end
         stmt << " from "
         stmt << @table if @table
+        if @remote_offset && @remote_limit
+          stmt << '('
+          if @remote_offset.to_i > 0
+            stmt << "#{@remote_offset},"
+          end
+          stmt << "#{@remote_limit})"
+        end
         stmt
       end
 

@@ -38,6 +38,23 @@ describe YqlQuery::Builder do
     end
   end
 
+  describe "#remote()" do
+    it "should set the limit" do
+      @builder.remote(5)
+      @builder.query.remote_limit.should == 5
+    end
+
+    it "should set the limit and offset" do
+      @builder.remote(5, 10)
+      @builder.query.remote_limit.should == 5
+      @builder.query.remote_offset.should == 10
+    end
+
+    it "should return the builder" do
+      @builder.remote(5).should be_kind_of(YqlQuery::Builder)
+    end
+  end
+
   describe "#select()" do
     it "should set the select" do
       @builder.select('name')
@@ -274,6 +291,16 @@ describe YqlQuery::Builder do
     it "should generate the right query when given an offset" do
       @builder.conditions("name = 'John'").offset(15)
       @builder.to_s.should == "select * from music.artists where name = 'John' offset 15"
+    end
+
+    it "should generate the right query when given a remote limit and offset" do
+      @builder.conditions("name = 'John'").remote(5)
+      @builder.to_s.should == "select * from music.artists(5) where name = 'John'"
+    end
+
+    it "should generate the right query when given a remote limit" do
+      @builder.conditions("name = 'John'").remote(5,15)
+      @builder.to_s.should == "select * from music.artists(15,5) where name = 'John'"
     end
 
     it "should generate the right query when given a select" do

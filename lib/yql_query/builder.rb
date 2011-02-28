@@ -9,17 +9,19 @@ module YqlQuery
     # @param
     def initialize(options={})
       self.query = Query.new
-      self.query.table      = options.delete(:table)
-      self.query.limit      = options.delete(:limit)
-      self.query.offset     = options.delete(:offset)
-      self.query.select     = options.delete(:select)
-      self.query.conditions = options.delete(:conditions) || []
-      self.query.uses       = options.delete(:uses) || []
-      self.query.tail       = options.delete(:tail)
-      self.query.truncate   = options.delete(:truncate)
-      self.query.reverse    = options.delete(:reverse)
-      self.query.unique     = options.delete(:unique)
-      self.query.sanitize   = options.delete(:sanitize)
+      self.query.table          = options.delete(:table)
+      self.query.limit          = options.delete(:limit)
+      self.query.offset         = options.delete(:offset)
+      self.query.select         = options.delete(:select)
+      self.query.conditions     = options.delete(:conditions) || []
+      self.query.uses           = options.delete(:uses) || []
+      self.query.tail           = options.delete(:tail)
+      self.query.truncate       = options.delete(:truncate)
+      self.query.reverse        = options.delete(:reverse)
+      self.query.unique         = options.delete(:unique)
+      self.query.sanitize       = options.delete(:sanitize)
+      self.query.remote_limit   = options.delete(:remote_limit)
+      self.query.remote_offset  = options.delete(:remote_offset)
     end
 
     # Assigns the table for the query being constructed
@@ -54,6 +56,21 @@ module YqlQuery
     #   base = Builder.new.offset('5')
     def offset(offset)
       self.query.offset = offset
+      self
+    end
+
+    # Assigns the remote limit for the query being constructed
+    #
+    # @param [Object] remote_limit The remote limit for the query.
+    # @param [optional, Object] remote_offset The remote offset for the query
+    # @return [YqlQuery::Builder] YqlQuery::Builder instance reflecting the remote limit assigned.
+    #
+    # @example The remote limit may be passed as either a string or fixnum:
+    #   base = Builder.new.remote_limit(5)
+    #   base = Builder.new.remote_limit('5')
+    def remote(remote_limit, remote_offset=0)
+      self.query.remote_limit = remote_limit
+      self.query.remote_offset = remote_offset
       self
     end
 
