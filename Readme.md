@@ -74,6 +74,7 @@ The full list of methods available:
     truncate(10)
     unique('format')
     sanitize('description')
+    remote(10, 30) # remote limits and offsets
 
 Refer to the [documentation](http://rdoc.info/gems/yql-query) for complete usage and more examples.
 
