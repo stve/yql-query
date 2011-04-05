@@ -1,4 +1,4 @@
-YqlQuery !["Travis CI"][1]
+YqlQuery !["Travis CI build status"][1]
 ========
 
 A simple [YQL query](http://developer.yahoo.com/yql/guide/index.html) generation library written in ruby, providing a chainable query builder capable of generating the most complex query conditions you can throw at it.
@@ -94,4 +94,4 @@ Copyright
 
 Copyright (c) 2011 Steve Agalloco. See LICENSE for details.
 
-[1]: http://travis-ci.org/[YOUR_GITHUB_USERNAME]/[YOUR_PROJECT_NAME].png
+[1]: http://travis-ci.org/spagalloco/yql-query.png
