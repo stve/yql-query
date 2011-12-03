@@ -79,7 +79,7 @@ Refer to the [documentation](http://rdoc.info/gems/yql-query) for complete usage
 ## <a name="ci"></a>Build Status
 [![Build Status](https://secure.travis-ci.org/spagalloco/yql-query.png)][ci]
 
-[ci]: http://travis-ci.org/jnunemaker/twitter
+[ci]: http://travis-ci.org/spagalloco/yql-query
 
 ## <a name="dependencies"></a>Dependency Status
 [![Dependency Status](https://gemnasium.com/spagalloco/yql-query.png)][gemnasium]
