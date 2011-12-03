@@ -1,15 +1,13 @@
-YqlQuery !["Travis CI build status"][1]
+YqlQuery
 ========
 
 A simple [YQL query](http://developer.yahoo.com/yql/guide/index.html) generation library written in ruby, providing a chainable query builder capable of generating the most complex query conditions you can throw at it.
 
-Installation
-------------
+## Installation
 
     (sudo) gem install yql-query
 
-Documentation
--------------
+## Documentation
 
 [http://rdoc.info/gems/yql-query](http://rdoc.info/gems/yql-query)
 
@@ -78,8 +76,18 @@ The full list of methods available:
 
 Refer to the [documentation](http://rdoc.info/gems/yql-query) for complete usage and more examples.
 
-Note on Patches/Pull Requests
------------------------------
+## <a name="ci"></a>Build Status
+[![Build Status](https://secure.travis-ci.org/spagalloco/yql-query.png)][ci]
+
+[ci]: http://travis-ci.org/jnunemaker/twitter
+
+## <a name="dependencies"></a>Dependency Status
+[![Dependency Status](https://gemnasium.com/spagalloco/yql-query.png)][gemnasium]
+
+[gemnasium]: https://gemnasium.com/spagalloco/yql-query
+
+
+## Note on Patches/Pull Requests
 
 * Fork the project.
 * Make your feature addition or bug fix.
@@ -89,9 +97,6 @@ Note on Patches/Pull Requests
   (if you want to have your own version, that is fine but bump version in a commit by itself I can ignore when I pull)
 * Send me a pull request. Bonus points for topic branches.
 
-Copyright
----------
+## Copyright
 
-Copyright (c) 2011 Steve Agalloco. See LICENSE for details.
-
-[1]: http://travis-ci.org/spagalloco/yql-query.png
+Copyright (c) 2011 Steve Agalloco. See [LICENSE](https://github.com/spagalloco/yql-query/blob/master/License.md) for details.
