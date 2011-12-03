@@ -99,4 +99,4 @@ Refer to the [documentation](http://rdoc.info/gems/yql-query) for complete usage
 
 ## Copyright
 
-Copyright (c) 2011 Steve Agalloco. See [LICENSE](https://github.com/spagalloco/yql-query/blob/master/License.md) for details.
+Copyright (c) 2011 Steve Agalloco. See [LICENSE](https://github.com/spagalloco/yql-query/blob/master/LICENSE.md) for details.
