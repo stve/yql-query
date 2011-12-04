@@ -76,18 +76,18 @@ The full list of methods available:
 
 Refer to the [documentation](http://rdoc.info/gems/yql-query) for complete usage and more examples.
 
-## <a name="ci"></a>Build Status
-[![Build Status](https://secure.travis-ci.org/spagalloco/yql-query.png)][ci]
+## <a name="build"></a>Build Status
+[![Build Status](https://secure.travis-ci.org/spagalloco/yql-query.png?branch=master)][travis]
 
-[ci]: http://travis-ci.org/spagalloco/yql-query
+[travis]: http://travis-ci.org/spagalloco/yql-query
 
 ## <a name="dependencies"></a>Dependency Status
-[![Dependency Status](https://gemnasium.com/spagalloco/yql-query.png)][gemnasium]
+[![Dependency Status](https://gemnasium.com/spagalloco/yql-query.png?travis)][gemnasium]
 
 [gemnasium]: https://gemnasium.com/spagalloco/yql-query
 
 
-## Note on Patches/Pull Requests
+## Contributing
 
 * Fork the project.
 * Make your feature addition or bug fix.
